@@ -47,7 +47,8 @@ export TAG=v1
 docker-compose up -d
 ```
 * Compose File
-```
+
+```bash
 version: "3.9"
 
 services:
