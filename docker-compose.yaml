@@ -1,0 +1,71 @@
+version: "3.9"
+
+services:
+  
+  dbnews:
+    image: postgres:${POSTGRES_VERSION}
+    container_name: dbnews
+    deploy:
+      mode: replicated
+      replicas: 1
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: '128M'
+        reservations:
+          cpus: '0.25'
+          memory: '64M'  
+      restart_policy: 
+        condition: always
+    ports:
+      - 5432:5432
+    volumes:
+      - postgres_data:/var/lib/postgresql/data  
+    environment:
+      POSTGRES_DB: kubenews
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: kub3n3w$
+    networks:
+      - kubenews
+
+  appnews:
+    image: mganalistati/kube-news:${TAG}
+    build:
+      context: ./src
+      dockerfile: Dockerfile
+      args:
+        VERSION: ${NODE_VERSION}   
+    container_name: appnews
+    depends_on:
+      - dbnews
+    deploy:
+      mode: replicated
+      replicas: 1
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: '128M'
+        reservations:
+          cpus: '0.25'
+          memory: '64M'
+      restart_policy:
+        condition: always
+    ports:
+      - 8080:8080
+    volumes:
+      - ${PWD}/src:/kube-news
+    working_dir: /kube-news
+    entrypoint: ["node", "server.js"]  
+    environment:
+      DB_HOST: dbnews
+      DB_DATABASE: kubenews
+      DB_USERNAME: admin
+      DB_PASSWORD: kub3n3w$
+    networks:
+      - kubenews
+
+volumes:
+  postgres_data:
+
+networks:
+  kubenews:
