@@ -30,7 +30,7 @@ docker container run -d -p 5432:5432 --name dbnews --memory 128MB --cpus 0.25 --
 * Executando aplicação na pasta src
 ```
 docker container run -d -p 8080:8080 --name appnews --memory 128MB --cpus 0.5 --mount type=bind,src=$PWD,dst=/kube-news --workdir /kube-news --restart always --network kubenews --env DB_HOST=dbnews --env DB_DATABASE=kubenews --env DB_USERNAME=admin --env DB_PASSWORD=kub3n3w$ node:18-alpine sh -c 'npm install && node server.js'
-
+```
 ### Executando localmente via Docker Compose
 * Instalar dependências
 ```
