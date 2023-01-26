@@ -1,0 +1,65 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    db: postgres 
+  name: postgres
+  namespace: devops
+spec:
+  replicas: 1
+  selector:
+    matchLabels: 
+      db: postgres
+  template:
+    metadata:
+      labels:
+        db: postgres
+    spec:
+      containers:
+      - name: postgres
+        image: postgres:15.1-alpine
+        imagePullPolicy: Always
+        resources:
+          limits:
+            cpu: 500m
+            memory: 256Mi
+          requests:
+            cpu: 250m
+            memory: 128Mi
+            #volumeMounts:
+            #- mountPath: /var/lib/postgresql/data
+            #name: postgres-data
+        ports:
+        - protocol: TCP         
+          containerPort: 5432 
+          name: pg-db-port            
+        env:
+        - name: POSTGRES_DB
+          value: kubenews
+        - name: POSTGRES_USER
+          value: kubenews
+        - name: POSTGRES_PASSWORD
+          value: kub3n3w$
+          #volumes:
+          #- name: postgres-data
+          #emptyDir:
+          #sizeLimit: 350Mi        
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always      
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    db: postgres
+  name: svc-postgres
+  namespace: devops
+spec:
+  selector:
+    db: postgres
+  ports:
+  - protocol: TCP        
+    port: 5432
+    targetPort: pg-db-port
+  type: ClusterIP
