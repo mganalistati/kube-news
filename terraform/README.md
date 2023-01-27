@@ -27,7 +27,7 @@
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_do_token"></a> [do\_token](#input\_do\_token) | This is the DO API token (String) | `string` | n/a | yes |
+| <a name="input_do_token"></a> [do\_token](#input\_do\_token) | This is the DO API token | `string` | n/a | yes |
 
 ## Outputs
 
