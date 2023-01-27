@@ -35,7 +35,7 @@ nodes:
 kind create cluster --config kind-example-config.yaml --name devops
 ```
 ### Expondo a aplicação local com o nginx atuando como um proxy reverso
-* Esta configuração permite que vocês acesse o **Host** (*que executa o cluster kind*) na porta **80** e o nginx manda a requisição para um DNS interno _kubenews.com.br:30000_ (*que configurei no arquivo hosts do server ubuntu na AWS apontando para o endereço IP de um dos containers do kind*)
+* Esta configuração permite que vocês acesse o **Host** (*que executa o cluster kind*) na porta **80** e o nginx manda a requisição para um DNS interno **_kubenews.com.br:30000_** (*que configurei no arquivo hosts do server ubuntu na AWS apontando para o endereço IP de um dos containers do kind*).
 
 * Não sei se todos sabem mas, quando subimos um cluster no **KIND** ele sobe os Nodes em containers, então, quando criamos um **Service:NodePort**, ele tá expondo a port *30000* do aplicativo para os containers e não para o **Host**, ou seja, "_curl http://127.0.1:30000/_" não vai rolar. Isoso ocorre porque a porta *30000* está exposta nos containers (*atuando como Worker Nodes do cluster*) isolados na rede docker do host (*em uma  instância EC2 na AWS para este caso*). Então você deve estar se perguntando: - **Como irei cessar esta aplicação que está expondo a porta 30000 para um container (rodando na rede docker do host) e não para o host ?**
 
