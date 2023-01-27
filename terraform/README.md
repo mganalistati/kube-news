@@ -1,3 +1,7 @@
+## Executando projeto em container docker
+```
+docker container run -it -d --name terraform -v ${PWD}:/project -w /project -e --entrypoint "" hashicorp/terraform:light sh
+```
 ## Requirements
 
 | Name | Version |
