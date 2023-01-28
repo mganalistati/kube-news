@@ -10,6 +10,17 @@ pipeline {
                 }
             }
         }
+
+        stage ('Push Docker Image') {
+            steps {
+                script {
+                    docker.withRepository('https://registry.hub.docker.com', 'dockerhub_credentials')
+                        dockerapp.push('latest')
+                        dockerapp.push("${env.BUILD_ID}")
+
+                }
+            }
+        }
     }
 
 }
