@@ -3,6 +3,9 @@ terraform/terraform.tfstate.backup
 terraform/.terraform.lock.hcl
 terraform/plano
 terraform/.terraform/
+plano
+terraform/config/
+terraform/kube_config.yaml
 # # Logs
 # logs
 # *.log
