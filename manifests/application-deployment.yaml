@@ -90,7 +90,7 @@ spec:
     spec:
       containers:
       - name: kubenews
-        image: mganalistati/kube-news:v2
+        image: mganalistati/kube-news:{{TAG}}
         imagePullPolicy: Always
         resources:
           limits:
